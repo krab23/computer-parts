@@ -1,0 +1,26 @@
+#create compose.yaml file for loading the po:qstgres:alpine image
+# and setting the environment variables for the database
+# and the port to be exposed
+name: computer-parts
+services:
+  db:
+    container_name: postgres_alpine
+    image: postgres:alpine
+    restart: always
+    volumes:
+      - ./data/postgresql:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports: 
+      - "5432:5432"
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5050:80"
